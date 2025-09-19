@@ -28,10 +28,7 @@ function rad(deg) {
  */
 async function main() {
   const canvas = document.getElementById('gpu-canvas');
-  if (!canvas) {
-    console.error('Canvas element not found!');
-    return;
-  }
+  const statsDiv = document.getElementById('stats');
 
   try {
     // Renderer initialization
@@ -158,6 +155,18 @@ async function main() {
         bindGroups: { 0: 'triangle-bind-group' },
         vertexCount: 3, // 3 for a triangle
       });
+
+      const s = renderer.getStats();
+      statsDiv.textContent =
+        `FPS: ${Math.floor(1 / deltaTime)}\n` +
+        `Frames: ${s.frameCount}\n` +
+        `Buffers: ${s.buffers}\n` +
+        `Textures: ${s.textures}\n` +
+        `Pipelines: ${s.pipelines}\n` +
+        `RenderTargets: ${s.renderTargets}\n` +
+        `BindGroups: ${s.bindGroups}\n` +
+        `Samplers: ${s.samplers}`;
+
       requestAnimationFrame(render);
     }
     requestAnimationFrame(render);
